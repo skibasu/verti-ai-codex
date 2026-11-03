@@ -48,6 +48,8 @@ Before writing implementation code, inspect all six main reference frames (360, 
 
 Distinguish directly observed values from derived ratios and implementation interpretations. Do not invent missing measurements. Resolve material ambiguities before coding the affected layout. This inspection and its recorded matrix are mandatory, not an optional implementation-time follow-up.
 
+The implementer independently retrieves measurements, variables, styles, and layout properties from Figma and documents any necessary calculations. The user is not required to provide measurement tables or calculations. Questions to the user should concern only material ambiguities that cannot be resolved from the available design and this specification.
+
 - Semantic HTML and CSS, with Tailwind CSS 4.
 - No application JavaScript, React, other UI frameworks, backend, database, or runtime component libraries.
 - Use the simplest practical Tailwind compilation workflow. Build-time tools are allowed and must not introduce browser-side JavaScript.
@@ -150,8 +152,8 @@ Inspect the other four frames for their exact values; do not assume they inherit
 
 ## 8. Hero / About VERTI
 
-- Header and hero together occupy at least the available browser viewport height.
-- The hero's minimum height equals the viewport height minus the header's actual layout height. Use a layout that accounts for responsive header sizing rather than an unrelated fixed subtraction.
+- Header and hero together occupy at least the small viewport height (`100svh`). Collapsing the mobile browser address bar does not increase the section height. Content may naturally increase the page height.
+- The hero's minimum height equals the small viewport height (`100svh`) minus the header's actual layout height. Use a layout that accounts for responsive header sizing rather than an unrelated fixed subtraction.
 - Allow the hero to grow naturally when its content needs more space. Never clip content to fit a reference frame height.
 - Use the small viewport height (`100svh`) for the page minimum height so mobile browser toolbar expansion and collapse do not resize the hero. Retain natural content growth and provide a `100vh` fallback where needed.
 - Match each frame's Auto Layout alignment, content order, spacing, and image placement.
@@ -208,11 +210,11 @@ Support current stable Chrome, Firefox, Edge, and Safari at delivery time, inclu
 - Desktop layout uses a proportional 12-column grid; tablet and mobile use stacked full-width blocks. Image breakouts use matching negative padding margins: right on desktop, left and right on mobile/tablet.
 - The minimum supported viewport is 360px. Above 1920px, main and header containers remain centered with a maximum outer width of 1920px including their padding.
 - Typography remains constant within each breakpoint range.
-- Header remains sticky; header and hero fill at least the viewport without preventing content growth.
+- Header remains sticky; header and hero together fill at least the small viewport height (`100svh`). Collapsing the mobile browser address bar does not increase the section height, and content can grow naturally.
 - Original imagery, decorative assets, and SVG logo match their design slots and proportions.
 - Every hero image uses `object-cover`; its container aspect ratio matches the corresponding Figma reference and remains proportional within the active breakpoint range.
 - Hamburger is decorative HTML/CSS artwork with no menu behavior. CTAs, navigation links, and the logo link use `href="#"` without real destinations or application actions; native anchor behavior and keyboard focus are preserved.
-- Button styling and applicable CSS states match the design system.
+- Default link and CTA appearance and interaction states match Figma wherever defined. For missing states, the implementer uses project colors, provides clearly visible keyboard focus, and documents the fallback styles in accordance with Section 9.
 - No unintended horizontal scrolling, overlapping content, distorted images, or clipped text occurs.
 - Screenshot overlays have been reviewed for the available reference area at all six viewports, and all below-the-fold mobile content has been visually inspected. Discrepancies are fixed, covered by an interpretation already authorized in this specification, or explicitly approved by the user and recorded. Only minor font-antialiasing differences are accepted without correction or approval.
 - README documents the build/view workflow, prototype limitations, and a manual browser acceptance checklist for the user. Automated tests and an AI-run cross-browser campaign are not required deliverables; final manual browser testing belongs to the user.
